@@ -1,0 +1,16 @@
+name: test
+on: push
+env:
+  BUILD_TYPE: Release
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Generate
+      run: cmake -B ${{github.workspace}}/_build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name: Build
+      run: cmake --build ${{github.workspace}}/_build --config ${{env.BUILD_TYPE}}
+    - name: Run
+      run: ./_build/Test/Test
